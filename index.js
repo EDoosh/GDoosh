@@ -113,8 +113,8 @@ bot.on('guildCreate', async guild => {
 
 // WHEN THE BOT IS ONLINE
 bot.on('ready', async () => {
-	if (displayServersOnLaunch) bot.guilds.forEach(async (g, key) => console.log(cTrusted(key) + ` - ` + cLoadSuccTime(await tools.toLength(` ${g.name} `, 30, 'center', '.')) + ` - ` + cErr(g.memberCount)));
-	bot.user.setActivity(config.playingStatus);
+	if (config.displayServersOnLaunch) await bot.guilds.forEach(async (g, key) => console.log(cTrusted(key) + ` - ` + cLoadSuccTime(await tools.toLength(` ${g.name} `, 30, 'center', '.')) + ` - ` + cErr(g.memberCount)));
+	await bot.user.setActivity(config.playingStatus);
 	console.log(cLoadSuccInfo('ONLINE'));
 
 	console.log(cLoadSuccTime(`${await tools.timeFormatted()}   -   `) + cLoadSucc(`Bot has started, with `) + cLoadSuccInfo(bot.users.size) + cLoadSucc(` users, in `) + cLoadSuccInfo(bot.channels.size) + cLoadSucc(` channels of `) + cLoadSuccInfo(bot.guilds.size) + cLoadSucc(` guilds.`));
