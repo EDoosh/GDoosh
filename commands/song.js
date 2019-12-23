@@ -55,7 +55,7 @@ module.exports.run = async (bot, message, args) => {
 		}
 		let m = await rp({ uri: data.link, encoding: null });
 		let b = Buffer.from(m, 'utf8');
-		let att = new Discord.Attachment(b, `${await tools.cleanR(data.name)}_-_-_${data.author}`);
+		let att = new Discord.Attachment(b, `${await tools.cleanR(data.name)}_-_-_${data.author}.mp3`);
 		embed.attachFile(att);
 		await downloadMsg.edit(`Uploading song...`);
 	}

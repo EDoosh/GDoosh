@@ -153,7 +153,7 @@ async function getGauntlets() {
 }
 
 module.exports.config = {
-	command: ['g', 'gaunt', 'gauntlet', 'gauntlets'],
+	command: ['gauntlets', 'g', 'gaunt', 'gauntlet'],
 	permlvl: 'All',
 	help: ['Fun', 'Show all gauntlets, or get a list of gauntlets.', 'All', '', 'Display all gauntlets.', 'All', '[GauntletID | GauntletName]', 'Display all the levels in the given gauntlet.'],
 	helpg: '',

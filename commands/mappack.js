@@ -188,7 +188,7 @@ async function getMapPacks(page) {
 }
 
 module.exports.config = {
-	command: ['mp', 'map', 'mappack', 'mappacks', 'pack', 'packs'],
+	command: ['mappack', 'mp', 'map', 'mappacks', 'pack', 'packs'],
 	permlvl: 'All',
 	help: ['Fun', 'Show all mappacks, or get a list of mappacks.', 'All', '', 'Display all mappacks.', 'All', '[MapPackID | MapPackName]', 'Display all the levels in the given mappack.'],
 	helpg: 'generalCommandSyntax',
