@@ -1,0 +1,4 @@
+A lot of these are taken from Colon's website GDBrowser.com
+They are put in to here because I
+a. Use them and want to show how I might have changed them
+b. I want to add to this good collection of code to show how we can use the GD servers.

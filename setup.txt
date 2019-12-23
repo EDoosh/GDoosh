@@ -1,0 +1,130 @@
+ ########################################################################
+#                                                                        #
+#  If you need assistance or don't know what to do, contact EDoosh#9599  #
+#                                                                        #
+ ########################################################################
+
+@@@ USAGE OF GDoosh
+@ You may not remove the name EDoosh anywhere from this bot or code, except in config.json
+@ By hosting this, EDoosh takes no responsibility for whatever happens.
+@ You may host this on multiple servers, but be warned that you may have your bot temporarily suspended due to Discord's spam protection.
+@ Edits to this code are allowed. 
+@ Monetary gain, in any form, even from personal edits, are not allowed.
+@ If you are unsure about anything, or want me to clarify something, contact me at EDoosh#9599
+
+
+### Installing GDoosh
+    - NODE.JS
+        - Firstly, install node.js from the link below. Select 'Recommended for Most Users'
+            - https://nodejs.org/en/
+        - Go through the installer, but remember to check the tickbox at 'Tools for Native Modules'
+    - VISUAL STUDIO CODE
+        - Download the installer from the link below
+            - https://code.visualstudio.com/
+    - DISCORD BOT
+        - SETTING UP THE DISCORD BOT
+            - Head to https://discordapp.com/developers/applications/
+            - Click 'New Application' and name it whatever you want.
+            - Add in an App Icon and a description, then go over to the 'Bot' page from the sidebar.
+            - Click 'Add Bot', choose a username for it, and click 'Copy' beneath the Token area.
+                - IT IS IMPORTANT YOU DO NOT PUT THIS TOKEN ANYWHERE BUT IN config.json
+                - If someone else gets this token, they can use your bot in every way you can.
+                - If it somehow becomes public, go back to this page, click regenerate, and put that back into your config.json
+            - With this token, simply put it into your config.json file.
+        - INVITING THE DISCORD BOT
+            - Go back to the General Information page, and click 'Copy' under 'Client ID'
+            - Head to this page - https://discordapi.com/permissions.html
+            - Select the permissions you would like to add. I recommend simply selecting Administator.
+            - In the Client ID text box, put your copied Client ID
+            - Copy the generated link and invite the bot to your server!
+    - INSTALLING NODEJS PACKAGES
+        - Packages are important for this to work. You must install all of these.
+            - discord.js
+            - quick.db
+            - cli-color
+            - request
+            - request-promise
+            - canvas
+        - Open up Visual Studio Code. Go to File -> Open Folder -> Select the extracted package of the downloaded GitHub file.
+        - When this loads, open up your in-built terminal (Terminal -> New Terminal)
+        - For each of the packages listed above, type 'npm i [name of the package]'. Wait for it to install and do the next.
+        - If you find an issue, contact EDoosh.
+    - ADDING THE ACCOUNT
+        - To add the account, type the account name and password into the respective places in config.json.
+        - If you for some reason change either the password, account name, or switch which account it uses...
+            - Put the new login info into config.json, and
+            - Delete login.txt.
+    - CONFIG.JSON SETUP
+        - Firstly, rename 'config TEMPLATE.json' to simply 'config.json'
+        - Secondly, to invite the bot to the emoji serversm see below at the bottom of the config.json chapter
+
+### Running GDoosh
+    - To run GDoosh, open up your terminal (Terminal -> New Terminal) and type 'node .'
+        - You must keep this open for as long as you wish your bot to be on for.
+        - If there is an issue, contact EDoosh.
+
+### Updating GDoosh   (How I wish it could auto-update.)
+    - Every so often, check the github for this project.
+    - If you see an update, download it. Move over the config.json and json.sqlite files to the new folder, and leave the rest in here.
+    - Delete this folder, open up the new one, and run the 'Running GDoosh' from there. 
+    - That *should* be all you need to do. I will leave a notice at the changelogs if there is more.
+
+### Encountering errors
+    - No programmer thinks of every possible error. 
+    - If you find one in the code, DM EDoosh and he'll sort it out.
+
+### config.json
+    - discord
+        - Your discord bot token should go here
+    - prefix
+        - The prefix you want your bot to have.
+    - playingStatus
+        - The playing status you want your bot to have.
+    - version
+        - The version of the bot. This should generally be left alone.
+
+    - getratedInterval
+        - The amount of time, in minutes, between each GetRatedLevels check
+    - linkAccInterval
+        - The amount of time, in seconds, between each newly-linked players check. Only happens if a user has done -=link in the past 5 mins
+
+    - copyDatabase
+        - Whether or not the database should be backed up
+    - copyDatabaseInterval
+        - The amount of time, in minutes, between each database backup
+    - deleteCopiedDatabaseInterval
+        - The amount of time, in days, for a copied database to be automatically deleted.
+            - Only deletes if the bot has been on the whole time. If the bot was closed before the timer runs out, it won't delete that file.
+    
+    - displayServersOnLaunch
+        - Whether or not to log every server the bot is in when you start up the bot.
+    - commandCooldown
+        - The amount of time, in seconds, before a user can use a command again
+    - maxPagesCpSearch
+        - The maximum amount of pages to go through before the bot gives up getting an accurate cp count.
+    - name
+        - The chosen name of the discord bot.
+    - clientId
+        - The client ID of the bot. Found on that discord developers page.
+    - ownerName
+        - Your discord name.
+    - ownerId
+        - The person who owns the bot's userID. To get this...
+            - Go to User Settings -> Appearance -> Advanced -> Enable Developer Mode.
+            - Send a message, then right click on your name and click 'Copy ID'
+        - If you want to add more people, put a comma and then open a new string. This should only be for the most trusted of people.
+            - e.g. ["267723762563022849", "274972137092284416", "255583524231315457", ...]
+
+    - accountName
+        - The name of the Geometry Dash account.
+    - accountPass
+        - The password of the Geometry Dash account.
+    
+    - emojis
+        - The emojis for the bot to use.
+        - IT IS HIGHLY RECOMMENDED YOU ASK ME TO JOIN YOUR BOT TO MY EMOJI SERVERS.
+        - If you don't, have fun uploading all those emojis and then putting in their IDs.
+        - Contact me @ EDoosh#9599. Just say you want me to add your bot to the emoji servers and give me it's clientId.
+        - You can also join them below. If you have Nitro, go nuts spamming these in other servers and flexing on everyone.
+            - GD Emojis 1 - https://discord.gg/jstWDvv
+            - GD Emojis 2 - https://discord.gg/ERPMeCJ
