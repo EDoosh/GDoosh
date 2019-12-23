@@ -22,9 +22,9 @@ module.exports.getArgs = async (args, startArg, endArg) => {
  * @param {boolean} returnSelf DEFAULT: FALSE | Whether or not to return the author if no values are found.
  * @return {collection} The collection of the user.
  */
-module.exports.getUser = async (message, userSearch, returnSelf = false) => {
+module.exports.getUser = async (message, userSearch, bot, returnSelf = false) => {
 	return new Promise(async (resolve, reject) => {
-		resolve((await message.mentions.users.first()) || (await message.guild.members.find(user => user.id === userSearch)) || (await message.guild.members.find(user => user.user.username === userSearch)) || (await message.guild.members.find(user => user.user.tag === userSearch)) || (returnSelf === true ? message.author : undefined));
+		resolve((await message.mentions.users.first()) || (await bot.users.find(user => user.id === userSearch)) || (await bot.users.find(user => user.username === userSearch)) || (await bot.users.find(user => user.tag === userSearch)) || (returnSelf === true ? message.author : undefined));
 	});
 };
 
@@ -32,13 +32,20 @@ module.exports.getUser = async (message, userSearch, returnSelf = false) => {
  * Retrieves a member collection. Mention - UserID - Username - UserTag - MemberNickname
  * @param {collection} message The message collection.
  * @param {string} memberSearch The string to try and match for.
+ * @param {boolean} bot The current bot instance.
  * @param {boolean} returnSelf DEFAULT: FALSE | Whether or not to return the author if no values are found.
  * @return {collection} The collection of the user.
  */
-module.exports.getMember = async (message, memberSearch, returnSelf = false) => {
-	return new Promise(async (resolve, reject) => {
-		resolve((await message.mentions.members.first()) || (await message.guild.members.get(memberSearch)) || (await message.guild.members.find(user => user.user.username === memberSearch)) || (await message.guild.members.find(user => user.user.tag === memberSearch)) || (await message.guild.members.find(user => user.nickname === memberSearch)) || (returnSelf === true ? message.member : undefined));
-	});
+module.exports.getMember = async (message, memberSearch, bot, returnSelf = false) => {
+	if (message.guild) {
+		return new Promise(async (resolve, reject) => {
+			resolve((await message.mentions.members.first()) || (await message.guild.members.get(memberSearch)) || (await message.guild.members.find(user => user.user.username === memberSearch)) || (await message.guild.members.find(user => user.user.tag === memberSearch)) || (await message.guild.members.find(user => user.nickname === memberSearch)) || (returnSelf === true ? message.member : undefined));
+		});
+	} else {
+		return new Promise(async (resolve, reject) => {
+			resolve((await bot.users.get(memberSearch)) || (await bot.users.find(user => user.username === memberSearch)) || (await bot.users.find(user => user.tag === memberSearch)) || (returnSelf === true ? message.author : undefined));
+		});
+	}
 };
 
 /**

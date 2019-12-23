@@ -74,12 +74,10 @@ for (const file of commandFiles) {
 	if (file.length > longest) longest = file.length;
 }
 for (const file of commandFiles) {
-	let loading = file;
-	for (i = 0; i < longest; i++) {
-		loading += ' ';
-		if (loading.length >= longest + 1) break;
+	async function asyncFuncLoad() {
+		console.log(cLoadFile(`Command `) + cLoadFileName(await tools.toLength(file, longest)) + cLoadFile(` loading...`));
 	}
-	console.log(cLoadFile(`Command `) + cLoadFileName(loading) + cLoadFile(`loading...`));
+	asyncFuncLoad();
 	const commande = require(`./commands/${file}`);
 	// set a new item in the Collection
 	// with the key as the command name and the value as the exported module
@@ -122,7 +120,7 @@ bot.on('ready', async () => {
 
 // WHEN A MESSAGE IS SENT IN A GUILD
 bot.on('message', async message => {
-	if (message.channel.name == undefined || message.author.bot == true) return;
+	if (/*message.channel.name == undefined || */ message.author.bot == true) return;
 	commands(message);
 });
 // Command system
@@ -134,7 +132,7 @@ async function commands(message) {
 	if (!message.content.startsWith(prefix)) return; // If message didn't start with the prefix or was sent by a bot, dont run next code
 	// If they aren't in a premium guild or arent a premium member
 	if (usedcmd.has(message.author.id)) return message.reply('please wait before using a command again!'); // Check if they have used a command recently, return error if they have
-	if (!config.ownerId.includes(message.member.id)) usedcmd.add(message.author.id); // If they havent used one recently, add them to recent list
+	if (!config.ownerId.includes(message.author.id)) usedcmd.add(message.author.id); // If they havent used one recently, add them to recent list
 	setTimeout(() => usedcmd.delete(message.author.id), config.commandCooldown * 1000); // After x seconds remove them.
 
 	// Create arguments
@@ -142,12 +140,13 @@ async function commands(message) {
 	var cmd = bot.commands.get(args[0].toLowerCase()); // Set cmd to the command to run it later
 	if (!cmd) return; // If it isnt a command, just return
 
-	let adminrole = admin.get(message.guild.id) || [];
+	if (message.guild) var adminrole = admin.get(message.guild.id) || [];
 
 	// Set message variables.
-	global.hasAdmin = message.member.roles.find(role => adminrole.includes(role.id));
-	if (cmd.config.permlvl == 'Admin' && !hasAdmin && message.author.id != message.guild.ownerID && !config.ownerId.includes(message.member.id)) return tools.errPerm(message, 1);
-	if ((cmd.config.permlvl == 'BotOwner' || cmd.config.permlvl == 'DISABLED') && !config.ownerId.includes(message.member.id)) return tools.errPerm(message, 2);
+	if (adminrole) global.hasAdmin = message.member.roles.find(role => adminrole.includes(role.id));
+	else global.hasAdmin = false;
+	if (cmd.config.permlvl == 'Admin' && !hasAdmin && (message.guild ? message.author.id != message.guild.ownerID : false) && !config.ownerId.includes(message.member.id)) return tools.errPerm(message, 1);
+	if ((cmd.config.permlvl == 'BotOwner' || cmd.config.permlvl == 'DISABLED') && !config.ownerId.includes(message.author.id)) return tools.errPerm(message, 2);
 	// Run the command
 	cmd.run(bot, message, args);
 }

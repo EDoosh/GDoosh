@@ -52,7 +52,7 @@ module.exports.idAndUn = async (search, full = false) => {
 	};
 	// Retrieve basic info, format it, and then get the account ID from it.
 	const returnedInitial = await rp(rpoInitial).catch(() => console.log(cErrInfo(`Issue retrieving ID and username. GD Servers likely experiencing issues.`)));
-	if (returnedInitial === '-1') return undefined;
+	if (!returnedInitial || returnedInitial === '-1') return undefined;
 	let info = await this.parseResponse(returnedInitial);
 	return new Promise((resolve, reject) => {
 		if (full === false) resolve([`${info[1]}`, `${info[2]}`, `${info[16]}`]);
@@ -462,8 +462,8 @@ module.exports.getSongOfficial = async officialSong => {
  * @param {boolean} returnSearch Returns the search string. DEFAULT: TRUE
  * @returns {string} The playerID of the user
  */
-module.exports.getPlayerID = async (message, search, returnSearch = true) => {
-	let user = await tools.getMember(message, search);
+module.exports.getPlayerID = async (message, search, bot, returnSearch = true) => {
+	let user = await tools.getMember(message, search, bot);
 	if (!user) return returnSearch ? search : undefined;
 	let pID = await playersByUID.get(user.id);
 	return pID ? pID : returnSearch ? search : undefined;
@@ -473,6 +473,7 @@ module.exports.getPlayerID = async (message, search, returnSearch = true) => {
  * Creates an embed of the level data
  * @param {collection} bot The current client instance
  * @param {object} level The level object
+ * @param {object} g Whether it is a guild or not.
  * @returns {Discord.RichEmbed} The formatted level Rich Embed.
  */
 module.exports.createEmbed = async (bot, level) => {
@@ -514,7 +515,7 @@ module.exports.createEmbed = async (bot, level) => {
 
 	return new Discord.RichEmbed()
 		.setAuthor(level.number ? `${typeSimplified} #${level.number}` : level.author, `https://edoosh.github.io/Images/GD/Emojis/Levels/${typeSimplified}.png`)
-		.setTitle(`${level.number ? `**__${level.name}__**\n*${level.author}*` : `**${level.name}**`} ${level.copiedID !== '0' ? config.emojis.copied : ``} ${level.large === true ? config.emojis.large_level : ''}${coinOut.length > 0 ? `\n${coinOut}` : ''}`, true)
+		.setTitle(`${level.number ? `**__${level.name}__**\n*${level.author}*` : `**${level.name}**`} ${level.copiedID !== '0' ? config.emojis.copied : ``} ${level.large === true ? config.emojis.large_level : ''}${coinOut.length > 0 ? `\n${coinOut}` : ''}`)
 		.setDescription(
 			(await tools.cleanR(level.description))
 				.replace(/\\/g, '\\\\')
@@ -523,7 +524,7 @@ module.exports.createEmbed = async (bot, level) => {
 		)
 		.addField(`${config.emojis.info} **${rfeTitle}**`, info1, true)
 		.addField(`⠀`, info2, true)
-		.addField(`${config.emojis.music_note} **__${await tools.cleanR(level.songName)}__** by **${level.songAuthor}**`, `:id: ${level.songID}\n${config.emojis.newgrounds} [Newgrounds Audio](https://www.newgrounds.com/audio/listen/${level.songID})\n:floppy_disk: ${level.songSize}`, false)
+		.addField(`${config.emojis.music_note} **__${await tools.cleanR(level.songName)}__** by **${level.songAuthor}**`, `:id: ${level.songID}\n${config.emojis.newgrounds} [Newgrounds Audio](https://www.newgrounds.com/audio/listen/${level.songID})\n${':floppy_disk:'} ${level.songSize}`, false)
 		.setThumbnail(`https://edoosh.github.io/Images/GD/${typeSimplified === 'not_rated' ? 'Rated' : typeSimplified}/${rfe}/${lvlImg}.png`)
 		.setColor(`0x${col}`)
 		.setFooter(`Level ID: ${level.id}⠀⬥⠀${level.version != 1 ? `Level Version ${level.version}⠀⬥⠀` : ''}${user ? `Discord: ${user.tag}` : `AccountID: ${level.accountID}⠀⬥⠀PlayerID: ${level.authorID}`}`);
@@ -532,6 +533,7 @@ module.exports.createEmbed = async (bot, level) => {
 /**
  * Creates an embed of a list of levels
  * @param {object} lvls The list of levels
+ * @param {object} g Whether it is a guild or not.
  * @returns {Discord.RichEmbed} The formatted list Rich Embed
  */
 module.exports.createListEmbed = async lvls => {

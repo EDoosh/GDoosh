@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
 	let weekly = await gdtools.getLevel('weekly');
 	if (!weekly || weekly === '-1') return msg.edit(`There is currently no weekly level.`);
 	weekly.type = 'weekly';
-	msg.edit(`${config.emojis.weekly} Here is the weekly level!`, await gdtools.createEmbed(bot, weekly, true));
+	msg.edit(`${config.emojis.weekly} Here is the weekly level!`, await gdtools.createEmbed(bot, weekly));
 };
 
 module.exports.config = {

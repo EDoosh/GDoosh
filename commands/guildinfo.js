@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const db = require('quick.db');
 
 module.exports.run = async (bot, message, args) => {
+	if (!args[1] && !message.guild) return message.channel.send(`Please provide a guildID when using this command in DMs.`);
 	if (!args[1]) var guildid = message.guild.id;
 	else var guildid = args[1];
 

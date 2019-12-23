@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const tools = require('../functions/generalFunctions.js');
 
 module.exports.run = async (bot, message, args) => {
+	if (!message.guild) return message.channel.send(`This command may only be used in servers, for obvious reasons.`);
 	// Administrator
 	// Rated pings
 	// Timed pings

@@ -36,9 +36,13 @@ module.exports.run = async bot => {
 	let loop = 0;
 	while (gotPage === false) {
 		loop++;
-		if (loop > 15) return console.log(cErrMsg('Error getting rated levels'));
+		if (loop > 15) {
+			return console.log(cErrMsg('Error getting rated levels'));
+		}
 		var retrieved = await gdtools.searchLevel('*', { page: pages.length, type: 'awarded' });
-		if (!retrieved) return console.log(cErrMsg(`Issue retrieving Rated Levels. GD Servers likely experiencing issues.`));
+		if (!retrieved || retrieved == '-1') {
+			return console.log(cErrMsg(`Issue retrieving Rated Levels. GD Servers likely experiencing issues.`));
+		}
 		pages.push(retrieved);
 		for (i = 0; i < pages[pages.length - 1].length && i < 15; i++) {
 			if (mostRecent.rated.includes(pages[pages.length - 1][i].id)) {
@@ -78,7 +82,7 @@ module.exports.run = async bot => {
 				// DM them their level got rated.
 				if (!testMode) {
 					user.send(`Congratulations! Your level \`${lvl.name}\` got **${lvl.type}**!`);
-					user.send(await gdtools.createEmbed(bot, lvl));
+					user.send(await gdtools.createEmbed(bot, lvl, false));
 				}
 				// Set isConnected to their ID
 				lvl.isConnected = userId;
@@ -162,7 +166,7 @@ module.exports.run = async bot => {
 	// Three most recent because if the most recently rated gets unrated, it has 2 to fall back onto before it breaks.
 	if (!testMode)
 		db.set(`gdgetrated`, {
-			rated: [threecent[0].id, threecent[1].id, threecent[2].id],
+			rated: threecent && threecent != '-1' ? [threecent[0].id, threecent[1].id, threecent[2].id] : mostRecent.rated,
 			daily: daily.id || mostRecent.daily,
 			weekly: weekly.id || mostRecent.weekly,
 		});

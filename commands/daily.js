@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
 	let daily = await gdtools.getLevel('daily');
 	if (!daily || daily === '-1') return msg.edit(`There is currently no daily level.`);
 	daily.type = 'daily';
-	msg.edit(`${config.emojis.daily} Here is the daily level!`, await gdtools.createEmbed(bot, daily, true));
+	msg.edit(`${config.emojis.daily} Here is the daily level!`, await gdtools.createEmbed(bot, daily));
 };
 
 module.exports.config = {

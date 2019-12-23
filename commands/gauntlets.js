@@ -10,6 +10,7 @@ const gauntHex = ['', 'ff6400', '007dff', '00af00', '6400c8', 'c80000', '4b64ff'
 module.exports.run = async (bot, message, args) => {
 	// Display list of all gauntlets
 	if (!args[1]) {
+		if (!message.guild) return message.channel.send(`This sub-command may only be used in servers, due to Discord limitations.`);
 		const e = config.emojis;
 		let msg = await message.channel.send(new Discord.RichEmbed().setFooter('Creating a new message...'));
 		showGauntlets(0, msg);
@@ -130,7 +131,7 @@ module.exports.run = async (bot, message, args) => {
 };
 
 async function getGauntlets() {
-	let resp = await rp({ method: 'POST', uri: 'http://boomlings.com/database/getGJGauntlets21.php', form: { gameVersion: regData.gameVersion, binaryVersion: regData.binaryVersion, gdw: '0', secret: regData.secret } });
+	let resp = await rp({ method: 'POST', uri: 'http://boomlings.com/database/getGJGauntlets21.php', form: { gameVersion: regData.gameVersion, binaryVersion: regData.binaryVersion, gdw: '0', secret: regData.secret } }).catch(() => console.log(`Error getting gauntlets.`));
 	if (!resp || resp == '-1' || resp.startsWith('#')) return;
 	let gauntletU = resp.split('#')[0].split('|');
 	let gauntlets = await gauntletU.map(x => {

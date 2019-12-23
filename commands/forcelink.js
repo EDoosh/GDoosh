@@ -6,7 +6,7 @@ const gdtools = require('../functions/gdFunctions.js');
 module.exports.run = async (bot, message, args) => {
 	if (!args[2]) return message.channel.send(`Missing arguments.`);
 
-	let dId = await tools.getUser(message, args[1]);
+	let dId = await tools.getUser(message, args[1], bot);
 	if (dId) dId = dId.id;
 	else if (/[0-9]{18}/.test(args[1])) dId = args[1];
 	else return message.channel.send(`Can not find that user.`);

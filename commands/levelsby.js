@@ -4,6 +4,7 @@ const tools = require('../functions/generalFunctions.js');
 const gdtools = require('../functions/gdFunctions.js');
 
 module.exports.run = async (bot, message, args) => {
+	if (!message.guild) return message.channel.send(`This command may only be used in servers, due to Discord limitations.`);
 	if (isNaN(args[args.length - 1 || 0])) var pg = 1;
 	else {
 		var pg = parseInt(args[args.length - 1]);
@@ -11,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
 	}
 	let msg = await message.channel.send(`Finding user...`);
 	if (!args[1]) args[1] = message.author.id;
-	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, 1)));
+	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, 1), bot));
 	if (!player) return msg.edit(`Cannot find this user!`);
 	chooseLevel(player, pg, msg);
 

@@ -6,7 +6,7 @@ const gdtools = require('../functions/gdFunctions.js');
 module.exports.run = async (bot, message, args) => {
 	let msg = await message.channel.send(`Finding user...`);
 	if (!args[1]) args[1] = message.author.id;
-	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, 1)));
+	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, 1), bot));
 	if (!player) return msg.edit(`Cannot find this user!`);
 	await msg.edit(`Looking for their In-Game CP count...`);
 	let cpOld = await gdtools.profile(player[1]);

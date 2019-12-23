@@ -11,6 +11,7 @@ module.exports.run = async bot => {
 	let rpOptionsGetAll = { method: 'POST', uri: 'http://www.boomlings.com/database/getGJMessages20.php', form: { gameVersion: regData.gameVersion, binaryVersion: regData.binaryVersion, gdw: '0', accountID: loginData.accountId, gjp: loginData.password, page: '0', total: '0', secret: regData.secret } };
 	let returned = await rp(rpOptionsGetAll).catch(() => console.log(cErrInfo(`Issue retrieving messages. GD Servers likely experiencing issues.`)));
 	// If there is an error, return error. If there are no messages, exit the function.
+	if (!returned) return;
 	if (returned === '-1') return console.log(cErrMsg('Retrieving messages returned -1 error message.'));
 	if (returned === '-2') return /*console.log('No messages.')*/;
 

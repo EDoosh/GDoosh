@@ -5,6 +5,7 @@ const gdtools = require('../functions/gdFunctions.js');
 
 module.exports.run = async (bot, message, args) => {
 	if (!/[0-9]/.test(args[1])) {
+		if (!message.guild) return message.channel.send(`This sub-command may only be used in servers, due to Discord limitations.`);
 		message.delete();
 		const e = config.emojis;
 		let search = await tools.getArgs(args, 1);

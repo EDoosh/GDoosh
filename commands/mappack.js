@@ -7,6 +7,7 @@ const rp = require('request-promise');
 module.exports.run = async (bot, message, args) => {
 	// Display list of all mappacks
 	if (!args[1]) {
+		if (!message.guild) return message.channel.send(`This sub-command may only be used in servers, due to Discord limitations.`);
 		const e = config.emojis;
 		let msg = await message.channel.send(new Discord.RichEmbed().setFooter('Creating a new message...'));
 		showMapPacks(0, msg, 0);

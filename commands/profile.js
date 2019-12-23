@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
 	var a = iconShow ? 2 : 1;
 	let msg = await message.channel.send(`Finding user...`);
 	if (!args[a]) args[a] = message.author.id;
-	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, a)), true);
+	let player = await gdtools.idAndUn(await gdtools.getPlayerID(message, await tools.getArgs(args, a), bot), true);
 	if (!player) return msg.edit(`Cannot find this user!`);
 	let userId = await playersByPID.get(player[2]);
 	if (userId) var user = await bot.users.get(userId);
@@ -32,12 +32,12 @@ module.exports.run = async (bot, message, args) => {
 
 	let lbIcon = profile.rank > 1000 ? config.emojis.F : profile.rank > 500 ? config.emojis.E : profile.rank > 200 ? config.emojis.D : profile.rank > 100 ? config.emojis.C : profile.rank > 50 ? config.emojis.B : profile.rank > 10 ? config.emojis.A : config.emojis.S;
 	let stats = '';
+	let stats2 = '';
 	if (profile.rank != 0) stats += `${lbIcon}  \`${profile.rank}\``;
 	stats += `\n${config.emojis.gd_star}  \`${profile.stars}\``;
 	stats += `\n${config.emojis.demons}  \`${profile.demons}\``;
 	stats += `\n${config.emojis.coin_secret}  \`${profile.coins}\``;
 	stats += `\n${config.emojis.coin_verified}  \`${profile.userCoins}\``;
-	let stats2 = '';
 	stats2 += `\n${config.emojis.diamond}  \`${profile.diamonds}\``;
 	if (cpNew === undefined || cpNew == profile.cp) stats2 += `\n${config.emojis.cp}  \`${profile.cp}CP\``;
 	else {
