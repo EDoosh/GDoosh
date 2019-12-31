@@ -100,7 +100,7 @@ async function ProfileFromAcc(search) {
 // '4': '263',       ???
 // '6': '',          ???  Always blank it seems
 // '8': '275',       CP
-// '9': '35',        ??? Icon (From first icon being 0)
+// '9': '35',        Icon
 // '10': '11',       Colour1
 // '11': '13',       Colour2
 // '13': '149',      Coins

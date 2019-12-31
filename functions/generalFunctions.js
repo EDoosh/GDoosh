@@ -176,20 +176,22 @@ module.exports.arrayMap = async map => {
  * @returns {string} The string at that length
  */
 module.exports.toLength = async (str, length, place = 'left', joiner = ' ') => {
-	if (place === 'centre' || place === 'center') {
-		var p = true;
-		place = 'left';
-	}
-	while (str.length < length) {
-		if (place === 'left') {
-			str += joiner;
-			if (p) place = 'right';
-		} else if (place === 'right') {
-			str = `${joiner}${str}`;
-			if (p) place = 'left';
+	return await new Promise(async (resolve, reject) => {
+		if (place === 'centre' || place === 'center') {
+			var p = true;
+			place = 'left';
 		}
-	}
-	return str;
+		while (str.length < length) {
+			if (place === 'left') {
+				str += joiner;
+				if (p) place = 'right';
+			} else if (place === 'right') {
+				str = `${joiner}${str}`;
+				if (p) place = 'left';
+			}
+		}
+		resolve(str);
+	});
 };
 
 /**

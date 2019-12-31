@@ -59,7 +59,7 @@ module.exports.run = async bot => {
 				db.push(`players`, [playerId, lamg]);
 				playersByPID.set(playerId, lamg);
 				playersByUID.set(lamg, playerId);
-				user.send(`Successfully linked your account with **${msg[1]}**!\nIf you want to set yourself a custom profile description, use \`-=me [your personal description]\` in the server you linked the bot in.`).catch(() => {});
+				user.send(`Successfully linked your account with **${msg[1]}**!\nIf you want to set yourself a custom profile description, use \`${config.prefix}me [your personal description]\` in the server you linked the bot in.`).catch(() => {});
 				console.log(`${user.username} successfully linked their account up with ${msg[1]}`);
 			} catch (err) {
 				console.log(err);

@@ -49,7 +49,6 @@ module.exports.run = async (bot, message, args) => {
 	let embed = new Discord.RichEmbed()
 		.setAuthor(`${player[1]}`, `https://edoosh.github.io/Images/GD/Emojis/Profiles/mod_${profile.moderator}.png`) //
 		.setDescription(user ? (ud ? ud : '(No user description provided)') : userId ? `This user is linked but their Discord information can not be found.` : `This user is not linked.`)
-		.setThumbnail(`attachment://${profile.username}-Icon.png`)
 		.addField(`${config.emojis.info} **User Statistics**`, stats, true)
 		.addField(`⠀`, stats2, true)
 		.addField(`${config.emojis.settings} **Community Settings**`, `${config.emojis.messages}  \`${profile.messages.replace(/^\w/, c => c.toUpperCase())}\`\n${config.emojis.friend_requests}  \`${profile.friendRequests ? 'Enabled' : 'Disabled'}\`\n${config.emojis.comment_history}  \`${profile.commentHistory.replace(/^\w/, c => c.toUpperCase())}\``)
@@ -62,8 +61,8 @@ module.exports.run = async (bot, message, args) => {
 	if (profile.twitter && !profile.twitter.includes(' ')) sm += `\n${config.emojis.twitter}  [Twitter](https://twitter.com/${profile.twitter})`;
 	if (profile.youtube && !profile.youtube.includes(' ')) sm += `\n${config.emojis.youtube}  [YouTube](https://www.youtube.com/channel/${profile.youtube})`;
 	if (sm.length > 0) embed.addField(`${config.emojis.social_media} **Social Media**`, sm, true);
-	embed.attachFiles([iconSingle]);
-	if (iconShow) {
+	if (iconSingle !== 'error') embed.setThumbnail(`attachment://${profile.username}-Icon.png`).attachFiles([iconSingle]);
+	if (iconShow && iconSet !== 'error') {
 		embed.attachFiles([iconSet]);
 		embed.setImage(`attachment://${profile.username}-Icon-Set.png`);
 	}

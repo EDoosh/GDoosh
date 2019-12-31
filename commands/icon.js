@@ -15,6 +15,7 @@ module.exports.run = async (bot, message, args) => {
 	profile.cube = profile.icon;
 	if (a === 2) var img = await gdtools.createIcon(profile, args[1]);
 	else var img = await gdtools.createIcons(profile);
+	if (img === 'error') return msg.edit(`There was an issue getting these images. Perhaps the Icon API is down.`);
 	msg.delete();
 	message.channel.send(
 		new Discord.RichEmbed()

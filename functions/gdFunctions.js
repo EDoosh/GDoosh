@@ -11,6 +11,7 @@ const mapPacks = require('./mappacks.json');
 const tools = require('./generalFunctions.js');
 const Discord = require('discord.js');
 const C = require('canvas');
+const db = require('quick.db');
 
 /**
  * Get a user's correct CP count.
@@ -129,6 +130,14 @@ module.exports.profile = async search => {
 		deathEffect: account[48],
 		glow: account[28] == '1',
 	};
+	let l = new Discord.Collection((await db.fetch(`ml`)) || [[]]);
+	if (l.has(userData.playerID) && userData.moderator == 0) {
+		l.delete(userData.playerID);
+		db.set(`ml`, await tools.arrayMap(l));
+	} else if (l.has(userData.playerID) || (!l.has(userData.playerID) && userData.moderator != 0)) {
+		l.set(userData.playerID, { username: userData.username, elder: userData.moderator });
+		db.set(`ml`, await tools.arrayMap(l));
+	}
 	return new Promise((resolve, reject) => resolve(userData));
 };
 
@@ -580,14 +589,17 @@ module.exports.createListEmbed = async lvls => {
  * @returns {Discord.Attachment} The attachment containing their icons
  */
 module.exports.createIcons = async profile => {
-	let gamemodes = ['cube', 'ship', 'ball', 'ufo', 'wave', 'robot', 'spider'];
-	let canvas = C.createCanvas(gamemodes.length * 200, 200);
-	let ctx = canvas.getContext('2d');
-	for (i = 0; i < gamemodes.length; i++) {
-		let img = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${gamemodes[i]}&icon=${profile[gamemodes[i]]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`);
-		ctx.drawImage(img, i * 200 + (100 - img.width / 2), 100 - img.height / 2);
-	}
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
+		let gamemodes = ['cube', 'ship', 'ball', 'ufo', 'wave', 'robot', 'spider'];
+		let canvas = C.createCanvas(gamemodes.length * 200, 200);
+		let ctx = canvas.getContext('2d');
+		for (i = 0; i < gamemodes.length; i++) {
+			let img = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${gamemodes[i]}&icon=${profile[gamemodes[i]]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`).catch(() => {
+				resolve('error');
+			});
+			ctx.drawImage(img, i * 200 + (100 - img.width / 2), 100 - img.height / 2);
+		}
+
 		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username}-Icon-Set.png`));
 	});
 };
@@ -599,15 +611,18 @@ module.exports.createIcons = async profile => {
  * @returns {Discord.Attachment} The attachment containing that icon
  */
 module.exports.createIcon = async (profile, type) => {
-	if (type === 'icon') type = 'cube';
-	if (type === 'bird') type = 'ufo';
-	if (type === 'dart') type = 'wave';
-	profile.cube = profile.icon;
-	let icon = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${type}&icon=${profile[type]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`);
-	let canvas = C.createCanvas(icon.width, icon.height);
-	let ctx = canvas.getContext('2d');
-	ctx.drawImage(icon, 0, 0);
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
+		if (type === 'icon') type = 'cube';
+		if (type === 'bird') type = 'ufo';
+		if (type === 'dart') type = 'wave';
+		profile.cube = profile.icon;
+		let icon = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${type}&icon=${profile[type]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`).catch(() => {
+			resolve('error');
+		});
+		let canvas = C.createCanvas(icon.width, icon.height);
+		let ctx = canvas.getContext('2d');
+		ctx.drawImage(icon, 0, 0);
+
 		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username}-Icon.png`));
 	});
 };

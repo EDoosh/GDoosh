@@ -85,10 +85,10 @@ module.exports.run = async (bot, message, args) => {
 
 		await dmto.send(helpabout);
 		await dmto.send(helpfun);
-		if (hasAdmin || !config.ownerId.includes(message.member.id)) await dmto.send(helpadmin);
-		if (config.ownerId.includes(message.member.id)) await dmto.send(helped);
+		if (hasAdmin || !config.ownerId.includes(message.author.id)) await dmto.send(helpadmin);
+		if (config.ownerId.includes(message.author.id)) await dmto.send(helped);
 		await dmto.send(helpother);
-		if (!hasAdmin && !config.ownerId.includes(message.member.id)) await dmto.send(`Some commands have been ommitted, as you do not have access to the commands in the server you used '${prefix}help' in.`);
+		if (!hasAdmin && !config.ownerId.includes(message.author.id)) await dmto.send(`Some commands have been ommitted, as you do not have access to the commands in the server you used '${prefix}help' in.`);
 	}
 };
 

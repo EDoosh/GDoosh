@@ -4,3 +4,5 @@ json.sqlite
 login.txt
 errors/
 backups/
+commands/testing.js
+commands/t.js
