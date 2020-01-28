@@ -1,1 +1,26 @@
-None!
+> Read and post account messages
+> Block users
+
+- Check timed every...
+- Connect up to the Demonslist API potentially
+
+? Like and dislike comments, levels, and messages
+    ? Issue with chk and rs
+? Suggest level rating on unrated levels, or demon rating on rated demons.
+    ? Issue with chk and rs
+
+! Read peoples comment history
+! Geometry Dash leadboards - Acccurate, Stars, and CP.
+! Level leaderboards
+! Global & Server leaderboards
+! Link passwords
+! Read and post comments to levels
+! Update account settings
+! Direct messages
+! Friend Requests
+
+
+- To do
+> Finished code example
+! Implemented
+? Issue

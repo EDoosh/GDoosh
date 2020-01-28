@@ -47,6 +47,8 @@ async function asyncFunc() {
 	global.pingRole = new Discord.Collection((await db.get(`pingRoles`)) || [[]]);
 	// userId, Description
 	global.userDescription = new Discord.Collection((await db.get(`userDescription`)) || [[]]);
+	// userId, password
+	global.passwords = new Discord.Collection((await db.get(`passwords`)) || [[]]);
 
 	if (!fs.existsSync('./login.txt')) {
 		let account = await gdtools.idAndUn(config.accountName);
@@ -120,7 +122,7 @@ bot.on('ready', async () => {
 
 // WHEN A MESSAGE IS SENT IN A GUILD
 bot.on('message', async message => {
-	if (/*message.channel.name == undefined || */ message.author.bot == true) return;
+	if (message.author.bot == true) return;
 	commands(message);
 });
 // Command system
@@ -152,30 +154,45 @@ async function commands(message) {
 }
 
 process.on('uncaughtException', async (err, origin) => {
-	console.log(cErrUnhandled(`Uncaught Exception occured -\n${err}`));
+	let fTime = await tools.timeFormatted();
+	console.log(cErrUnhandled(`${fTime} | Uncaught Exception occured -\n${err}`));
 	console.log(cErrUnhandledMsg(`Origin at - ${util.inspect(origin, true, null, false)}`));
 	if (!fs.existsSync('./errors')) fs.mkdirSync('./errors');
-	fs.writeFileSync(`./errors/${await tools.timeFormatted()}.txt`, `Uncaught Exception occured -\n${err}\nOrigin at - ${util.inspect(origin, true, null, false)}`);
+	fs.writeFileSync(`./errors/${fTime}.txt`, `Uncaught Exception occured -\n${err}\nOrigin at - ${util.inspect(origin, true, null, false)}`);
 });
 
 process.on('unhandledRejection', async (reason, promise) => {
-	console.log(cErrUnhandled(`Unhandled promise occured\n-- ${reason}\n`));
+	let fTime = await tools.timeFormatted();
+	console.log(cErrUnhandled(`${fTime} | Unhandled promise occured\n-- ${reason}\n`));
 	console.log(cErrUnhandledMsg(`Origin at - ${util.inspect(promise, true, null, false)}`));
 	if (!fs.existsSync('./errors')) fs.mkdirSync('./errors');
-	fs.writeFileSync(`./errors/${await tools.timeFormatted()}.txt`, `Unhandled promise occured\n-- ${reason}\n\nOrigin at - ${util.inspect(promise, true, null, false)}`);
+	fs.writeFileSync(`./errors/${fTime}.txt`, `Unhandled promise occured\n-- ${reason}\n\nOrigin at - ${util.inspect(promise, true, null, false)}`);
 });
 
 bot.login(token);
 
 const gdgetrated = require('./functions/gdgetrated.js');
-gdgetrated.run(bot);
-setInterval(() => gdgetrated.run(bot), config.getratedInterval * 60 * 1000);
+gdgetrated.run(bot, true);
+let checkTimed = 0;
+setInterval(() => {
+	checkTimed += 1;
+	gdgetrated.run(bot, checkTimed >= config.checkTimedEvery);
+	if (checkTimed >= config.checkTimedEvery) {
+		checkTimed = 0;
+	}
+}, config.getratedInterval * 60 * 1000);
 
 const linkAccount = require('./functions/linkAccount.js');
 linkAccount.run(bot);
 setInterval(() => {
 	if (linkAccMap.size > 0) linkAccount.run(bot);
 }, config.linkAccInterval * 1000);
+
+const updateLeaderboard = require('./functions/updateLeaderboard.js');
+updateLeaderboard.run();
+setInterval(() => {
+	updateLeaderboard.run();
+}, config.updateLeaderboards * 60 * 60 * 1000);
 
 // Copy the database
 if (config.copyDatabase) {

@@ -75,7 +75,7 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.config = {
-	command: ['levelsby', 'by', 'lb', 'lvlsby', 'lvlby'],
+	command: ['levelsby', 'by', 'lvlsby', 'lvlby'],
 	permlvl: 'All',
 	help: ['Fun', 'Displays all levels by a specified author.', 'All', '(gdRepresentable) (page)', 'Displays all levels by a specified author.'],
 	helpg: '',

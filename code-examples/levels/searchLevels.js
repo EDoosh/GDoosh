@@ -1,12 +1,13 @@
 const fs = require('fs');
 const rp = require('request-promise');
 const util = require('util');
-const tools = require('../functions/generalFunctions.js');
-const gdtools = require('../functions/gdFunctions.js');
-const XOR = require('../functions/XOR.js');
+const tools = require('../../functions/generalFunctions.js');
+const gdtools = require('../../functions/gdFunctions.js');
+const XOR = require('../../functions/XOR.js');
 const xor = new XOR();
 const config = JSON.parse(fs.readFileSync('./config.json'));
 const loginData = JSON.parse(fs.readFileSync('./login.txt'));
+const jf = require('json-format');
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -43,7 +44,9 @@ const loginData = JSON.parse(fs.readFileSync('./login.txt'));
 
 // type             All of these will ignore search queries
 //                  Filters allowed - mostdownloaded, mostliked, trending, recent, awarded
-//                  Fillter ignored - featured, magic, halloffame
+//                  Filters ignored - featured, magic, halloffame
+// type: '15' is most liked in GD World
+// type: '17' is featured in GD World
 
 // The following need to just be in there. They do not need a specific value after them.
 // epic             Whether the level must be epic
@@ -57,8 +60,8 @@ const loginData = JSON.parse(fs.readFileSync('./login.txt'));
 // user             Whether it must return the users level. Search must be a playerID
 // mappack          Whether it must return the levels in the mappack. Search must be a mappackName
 
-const levels = require('../functions/levels.json').music;
-const mapPacks = require('../functions/mappacks.json');
+const levels = JSON.parse(fs.readFileSync('./functions/levels.json')).music;
+const mapPacks = JSON.parse(fs.readFileSync('./functions/mappacks.json'));
 
 const regData = {
 	gameVersion: '21',
@@ -66,10 +69,12 @@ const regData = {
 	secret: 'Wmfd2893gb7',
 };
 
-a('Stereo Madness');
+// Whenever the response is -1, you've probably set the type to something the GD servers don't want to show to you.
+// This could be sent levels, reported levels, ect.
+a('*', { type: '1', page: '1903', starred: '1' });
 
-async function a(search) {
-	fs.writeFileSync('./h.txt', util.inspect(await getLevel(search), true, null, false));
+async function a(search, params) {
+	fs.writeFileSync('./code-examples/levels/searchLevels.txt', jf(await getLevel(search, params)));
 }
 
 async function getLevel(search, params = {}) {
@@ -129,7 +134,7 @@ async function getLevel(search, params = {}) {
 
 	// Request the contents
 	const body = await rp({ method: 'POST', uri: 'http://boomlings.com/database/getGJLevels21.php', form: filters });
-	if (!body || body == '-1') return res.send('-1');
+	if (!body || body == '-1') return '-1';
 	let preRes = body.split('#')[0].split('|', 10);
 	let authorList = {};
 	let songList = {};
@@ -178,7 +183,7 @@ async function getLevel(search, params = {}) {
 			x.songSize = (songSearch[5] || '0') + 'MB';
 			x.songID = songSearch[1] || x.customSong;
 		} else {
-			let foundSong = require('../functions/levels.json').music[parseInt(x[12]) + 1] || { null: true };
+			let foundSong = levels[parseInt(x[12]) + 1] || { null: true };
 			x.songName = foundSong[0] || 'Unknown';
 			x.songAuthor = foundSong[1] || 'Unknown';
 			x.songSize = '0MB';

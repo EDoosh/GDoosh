@@ -34,10 +34,10 @@ module.exports.run = async (bot, message, args) => {
 					.setDescription(`${config.emojis.checkbox_ticked} - User is linked to the bot.\n`)
 					.setColor(0xeb3f75)
 					.addField(`${config.emojis.mod_elder}⠀Elder Moderators`, out[1] || 'None found...', true)
-					.addField(`(${(out[1].match(new RegExp('\n', 'g')) || []).length})`, out[3] || '⠀', true)
+					.addField(`(${((out[1] + out[3]).match(new RegExp('\n', 'g')) || []).length})`, out[3] || '⠀', true)
 					.addBlankField(true)
 					.addField(`${config.emojis.mod}⠀Moderators`, out[0] || 'None found...', true)
-					.addField(`(${(out[0].match(new RegExp('\n', 'g')) || []).length})`, out[2] || '⠀', true)
+					.addField(`(${((out[0] + out[2]).match(new RegExp('\n', 'g')) || []).length})`, out[2] || '⠀', true)
 					.addField(`⠀`, out[4] || '⠀', true),
 			);
 		}

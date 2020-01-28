@@ -1,6 +1,6 @@
 const gdtools = require('../functions/gdFunctions.js');
 
-a('mbed');
+a('nonaGonalGMD');
 async function a(player) {
 	console.log(await gdtools.idAndUn(player, true));
 	console.log(await gdtools.profile(player));

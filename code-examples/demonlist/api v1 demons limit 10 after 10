@@ -1,0 +1,172 @@
+[
+  {
+    "id": 91,
+    "name": "Ragnarok",
+    "position": 11,
+    "requirement": 51,
+    "video": "https://www.youtube.com/watch?v=aGtXqn9HL2o",
+    "publisher": {
+      "id": 351,
+      "name": "knobbelboy",
+      "banned": false
+    },
+    "verifier": {
+      "id": 931,
+      "name": "Technical",
+      "banned": false
+    }
+  },
+  {
+    "id": 182,
+    "name": "Plasma Pulse Finale",
+    "position": 12,
+    "requirement": 48,
+    "video": "https://www.youtube.com/watch?v=xqzx9cu6XoA",
+    "publisher": {
+      "id": 582,
+      "name": "Smokes",
+      "banned": false
+    },
+    "verifier": {
+      "id": 582,
+      "name": "Smokes",
+      "banned": false
+    }
+  },
+  {
+    "id": 2,
+    "name": "The Yandere",
+    "position": 13,
+    "requirement": 51,
+    "video": "https://www.youtube.com/watch?v=MN6Dra6yAys",
+    "publisher": {
+      "id": 1048,
+      "name": "Dorami",
+      "banned": false
+    },
+    "verifier": {
+      "id": 1048,
+      "name": "Dorami",
+      "banned": false
+    }
+  },
+  {
+    "id": 126,
+    "name": "Gamma",
+    "position": 14,
+    "requirement": 50,
+    "video": "https://www.youtube.com/watch?v=HTXRWzS2aw8",
+    "publisher": {
+      "id": 3021,
+      "name": "MindCap",
+      "banned": false
+    },
+    "verifier": {
+      "id": 931,
+      "name": "Technical",
+      "banned": false
+    }
+  },
+  {
+    "id": 210,
+    "name": "Ouroboros",
+    "position": 15,
+    "requirement": 53,
+    "video": "https://www.youtube.com/watch?v=hLTnewDC2Hs",
+    "publisher": {
+      "id": 761,
+      "name": "ViPriN",
+      "banned": false
+    },
+    "verifier": {
+      "id": 931,
+      "name": "Technical",
+      "banned": false
+    }
+  },
+  {
+    "id": 178,
+    "name": "Hyper Paracosm",
+    "position": 16,
+    "requirement": 52,
+    "video": "https://www.youtube.com/watch?v=zQbU_2To0bg",
+    "publisher": {
+      "id": 31471,
+      "name": "Endlevel",
+      "banned": true
+    },
+    "verifier": {
+      "id": 5833,
+      "name": "Dr. Joe",
+      "banned": false
+    }
+  },
+  {
+    "id": 118,
+    "name": "Sonic Wave",
+    "position": 17,
+    "requirement": 50,
+    "video": "https://www.youtube.com/watch?v=GpXTwPgweAk",
+    "publisher": {
+      "id": 614,
+      "name": "Sunix",
+      "banned": false
+    },
+    "verifier": {
+      "id": 614,
+      "name": "Sunix",
+      "banned": false
+    }
+  },
+  {
+    "id": 119,
+    "name": "Generic Wave",
+    "position": 18,
+    "requirement": 49,
+    "video": "https://www.youtube.com/watch?v=RL-c3PM4uhk",
+    "publisher": {
+      "id": 781,
+      "name": "Pennutoh",
+      "banned": false
+    },
+    "verifier": {
+      "id": 452,
+      "name": "Mullsy",
+      "banned": false
+    }
+  },
+  {
+    "id": 92,
+    "name": "Spacial Rend",
+    "position": 19,
+    "requirement": 43,
+    "video": "https://www.youtube.com/watch?v=VgiRJRBzacM",
+    "publisher": {
+      "id": 2925,
+      "name": "Eclipsed",
+      "banned": false
+    },
+    "verifier": {
+      "id": 130,
+      "name": "DiamondSplash",
+      "banned": false
+    }
+  },
+  {
+    "id": 129,
+    "name": "Sigma",
+    "position": 20,
+    "requirement": 58,
+    "video": "https://www.youtube.com/watch?v=3INdO0esQRw",
+    "publisher": {
+      "id": 3021,
+      "name": "MindCap",
+      "banned": false
+    },
+    "verifier": {
+      "id": 931,
+      "name": "Technical",
+      "banned": false
+    }
+  }
+]

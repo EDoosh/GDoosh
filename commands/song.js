@@ -51,7 +51,7 @@ module.exports.run = async (bot, message, args) => {
 		}
 		if (parseInt(data.size) > 7.9) {
 			downloadMsg.delete();
-			return message.channel.send(`This song is too large to upload to Discord!`, embed);
+			return message.channel.send(`This song is too large to upload to Discord!${data.link ? `[Click here to listen to the song instead](${data.link})` : ''}`, embed);
 		}
 		let m = await rp({ uri: data.link, encoding: null });
 		let b = Buffer.from(m, 'utf8');

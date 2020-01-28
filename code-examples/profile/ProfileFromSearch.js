@@ -1,8 +1,8 @@
 const fs = require('fs');
 const rp = require('request-promise');
 const util = require('util');
-const gdtools = require('../functions/gdFunctions.js');
-const XOR = require('../functions/XOR.js');
+const gdtools = require('../../functions/gdFunctions.js');
+const XOR = require('../../functions/XOR.js');
 const xor = new XOR();
 const config = JSON.parse(fs.readFileSync('./config.json'));
 const loginData = JSON.parse(fs.readFileSync('./login.txt'));

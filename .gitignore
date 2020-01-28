@@ -6,3 +6,4 @@ errors/
 backups/
 commands/testing.js
 commands/t.js
+commands/guilds.js

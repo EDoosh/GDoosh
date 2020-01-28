@@ -10,7 +10,7 @@ const gdtools = require('./gdFunctions.js');
 
 // https://edoosh.github.io/Images/GD/Daily|Weekly|Rated/Epic|Featured|Rated/0-13.png
 
-module.exports.run = async bot => {
+module.exports.run = async (bot, timedLvls) => {
 	const testMode = false;
 	// Fetch the most recent known rated level array
 	let mostRecent = await db.get(`gdgetrated`);
@@ -55,12 +55,14 @@ module.exports.run = async bot => {
 	}
 
 	// Get the daily and weekly. See if their IDs match, and if so, set them to null.
-	let daily = await gdtools.getLevel('daily');
-	let weekly = await gdtools.getLevel('weekly');
-	if (!daily || (mostRecent.daily && mostRecent.daily == daily.id)) daily = false;
-	else findAuthor(daily, 'daily');
-	if (!weekly || (mostRecent.weekly && mostRecent.weekly == weekly.id)) weekly = false;
-	else findAuthor(weekly, 'weekly');
+	if (timedLvls) {
+		var daily = await gdtools.getLevel('daily');
+		var weekly = await gdtools.getLevel('weekly');
+		if (!daily || (mostRecent.daily && mostRecent.daily == daily.id)) daily = false;
+		else findAuthor(daily, 'daily');
+		if (!weekly || (mostRecent.weekly && mostRecent.weekly == weekly.id)) weekly = false;
+		else findAuthor(weekly, 'weekly');
+	}
 
 	// For each level && daily && weekly
 	for (const lvlPg of pages) for (const lvl of lvlPg) findAuthor(lvl, ['??? error ???', 'rated', 'featured', 'epic'][lvl.cp]);
@@ -81,7 +83,7 @@ module.exports.run = async bot => {
 				// Can be found ->
 				// DM them their level got rated.
 				if (!testMode) {
-					user.send(`Congratulations! Your level \`${lvl.name}\` got **${lvl.type}**!`);
+					user.send(`Congratulations! Your level \`${lvl.name}\` got **${lvl.type}**!`).catch(() => {});
 					user.send(await gdtools.createEmbed(bot, lvl, false));
 				}
 				// Set isConnected to their ID
@@ -117,49 +119,55 @@ module.exports.run = async bot => {
 
 		if (rated)
 			await rated.setMentionable(true, 'Pinging times').catch(() => {
-				if (r) r.send(`Please enable 'Manage Role' permission for the bot.`);
+				if (r) r.send(`Please enable 'Manage Role' permission for the bot.`).catch(() => {});
 			});
 		// For each level && daily && weekly
 		for (const lvlPg of pages) {
 			for (const lvl of lvlPg) {
 				// If isConnected has an ID && they are in the server && they have a special channel
-				if (lvl.isConnected && s) var user = guild.members.get(lvl.isConnected);
-				if (user) s.send(`${user} *(${lvl.author})*  has got **${lvl.name}** ${lvl.type} at ${lvl.stars}! Check it out with the ID \`${lvl.id}\`${lvl.correctCp !== undefined ? `\n*They now have ${lvl.correctCp}*` : ''}`);
+				if (lvl.isConnected && s) {
+					let user = guild.members.get(lvl.isConnected);
+					if (user) s.send(`${user} *(${lvl.author})*  has got **${lvl.name}** ${lvl.type} at ${lvl.stars}${config.emojis.gd_star}! Check it out with the ID \`${lvl.id}\`${lvl.correctCp !== undefined ? `\n*They now have ${lvl.correctCp}${config.emojis.cp}*` : ''}`).catch(() => {});
+				}
 				if (r) {
-					if (rated) await r.send(`${rated}`, await gdtools.createEmbed(bot, lvl));
-					else await r.send(await gdtools.createEmbed(bot, lvl));
+					if (rated) await r.send(`${rated}`, await gdtools.createEmbed(bot, lvl)).catch(() => {});
+					else await r.send(await gdtools.createEmbed(bot, lvl)).catch(() => {});
 				}
 			}
 		}
 		if (rated)
 			await rated.setMentionable(false, 'Pinging times over :(').catch(() => {
-				if (r) r.send(`Please enable 'Manage Role' permission for the bot.`);
+				if (r) r.send(`Please enable 'Manage Role' permission for the bot.`).catch(() => {});
 			});
 		if (timed)
 			await timed.setMentionable(true, 'Pinging times round 2').catch(() => {
-				if (t) t.send(`Please enable 'Manage Role' permission for the bot.`);
+				if (t) t.send(`Please enable 'Manage Role' permission for the bot.`).catch(() => {});
 			});
 		if (daily) {
 			// If isConnected has an ID && they are in the server && they have a special channel
-			if (daily.isConnected && s) var user = guild.users.find(x => x.id === daily.isConnected);
-			if (user) s.send(`${user} *(${daily.author})*  has got **${daily.name}** *(${daily.type} ${daily.stars})* chosen for Daily! Check it out with the ID \`${daily.id}\`\n`);
+			if (daily.isConnected && s) {
+				let user = guild.users.find(x => x.id === daily.isConnected);
+				if (user) s.send(`${user} *(${daily.author})*  has got **${daily.name}** *(${daily.type} ${daily.stars}${config.emojis.gd_star})* chosen for Daily! Check it out with the ID \`${daily.id}\`\n`).catch(() => {});
+			}
 			if (t) {
-				if (timed) await t.send(`${timed}`, await gdtools.createEmbed(bot, daily));
-				else await t.send(await gdtools.createEmbed(bot, daily));
+				if (timed) await t.send(`${timed}`, await gdtools.createEmbed(bot, daily)).catch(() => {});
+				else await t.send(await gdtools.createEmbed(bot, daily)).catch(() => {});
 			}
 		}
 		if (weekly) {
 			// If isConnected has an ID && they are in the server && they have a special channel
-			if (weekly.isConnected && s) var user = guild.users.find(x => x.id === weekly.isConnected);
-			if (user) s.send(`${user} *(${weekly.author})*  has got **${weekly.name}** *(${weekly.type} ${weekly.stars})* chosen for Weekly! Check it out with the ID \`${weekly.id}\`\n`);
+			if (weekly.isConnected && s) {
+				let user = guild.users.find(x => x.id === weekly.isConnected);
+				if (user) s.send(`${user} *(${weekly.author})*  has got **${weekly.name}** *(${weekly.type} ${weekly.stars}${config.emojis.gd_star})* chosen for Weekly! Check it out with the ID \`${weekly.id}\`\n`).catch(() => {});
+			}
 			if (t) {
-				if (timed) await t.send(`${timed}`, await gdtools.createEmbed(bot, weekly));
-				else await t.send(await gdtools.createEmbed(bot, weekly));
+				if (timed) await t.send(`${timed}`, await gdtools.createEmbed(bot, weekly)).catch(() => {});
+				else await t.send(await gdtools.createEmbed(bot, weekly)).catch(() => {});
 			}
 		}
 		if (timed)
 			await timed.setMentionable(false, 'Pinging times over again ;(').catch(() => {
-				if (t) t.send(`Please enable 'Manage Role' permission for the bot.`);
+				if (t) t.send(`Please enable 'Manage Role' permission for the bot.`).catch(() => {});
 			});
 	});
 
@@ -167,7 +175,7 @@ module.exports.run = async bot => {
 	if (!testMode)
 		db.set(`gdgetrated`, {
 			rated: threecent && threecent != '-1' ? [threecent[0].id, threecent[1].id, threecent[2].id] : mostRecent.rated,
-			daily: daily.id || mostRecent.daily,
-			weekly: weekly.id || mostRecent.weekly,
+			daily: daily ? daily.id || mostRecent.daily : mostRecent.daily,
+			weekly: weekly ? weekly.id || mostRecent.weekly : mostRecent.weekly,
 		});
 };

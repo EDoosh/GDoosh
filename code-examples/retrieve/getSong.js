@@ -1,7 +1,7 @@
 const fs = require('fs');
 const rp = require('request-promise');
 const util = require('util');
-const gdtools = require('../functions/gdFunctions.js');
+const gdtools = require('../../functions/gdFunctions.js');
 
 const regData = {
 	gameVersion: '21',

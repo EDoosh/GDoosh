@@ -1,0 +1,370 @@
+{
+  "data": {
+    "creators": [
+      {
+        "banned": false,
+        "id": 158,
+        "name": "Enlex"
+      },
+      {
+        "banned": false,
+        "id": 185,
+        "name": "Failure444"
+      },
+      {
+        "banned": false,
+        "id": 405,
+        "name": "Marwec"
+      },
+      {
+        "banned": false,
+        "id": 545,
+        "name": "Rustam"
+      },
+      {
+        "banned": false,
+        "id": 781,
+        "name": "Pennutoh"
+      },
+      {
+        "banned": false,
+        "id": 817,
+        "name": "Bianox"
+      },
+      {
+        "banned": false,
+        "id": 820,
+        "name": "Dudex"
+      },
+      {
+        "banned": false,
+        "id": 848,
+        "name": "DreamEater"
+      },
+      {
+        "banned": false,
+        "id": 1622,
+        "name": "Samifying"
+      },
+      {
+        "banned": false,
+        "id": 2019,
+        "name": "Shocksidian"
+      },
+      {
+        "banned": false,
+        "id": 2029,
+        "name": "Aquatias"
+      },
+      {
+        "banned": false,
+        "id": 2149,
+        "name": "YakobNugget"
+      },
+      {
+        "banned": false,
+        "id": 2931,
+        "name": "SlimJim"
+      },
+      {
+        "banned": false,
+        "id": 3461,
+        "name": "Juhou"
+      },
+      {
+        "banned": false,
+        "id": 3663,
+        "name": "TMNGaming"
+      },
+      {
+        "banned": false,
+        "id": 5663,
+        "name": "LeoCreatorX"
+      },
+      {
+        "banned": false,
+        "id": 6036,
+        "name": "TehTactiq"
+      },
+      {
+        "banned": false,
+        "id": 6447,
+        "name": "RicoLP"
+      },
+      {
+        "banned": false,
+        "id": 6509,
+        "name": "Onnikonna"
+      },
+      {
+        "banned": false,
+        "id": 14670,
+        "name": "Uneskladovae"
+      },
+      {
+        "banned": false,
+        "id": 31534,
+        "name": "Osiris GD"
+      }
+    ],
+    "id": 219,
+    "name": "Zodiac",
+    "position": 1,
+    "publisher": {
+      "banned": true,
+      "id": 698,
+      "name": "xander556"
+    },
+    "records": [
+      {
+        "id": 24756,
+        "player": {
+          "banned": false,
+          "id": 931,
+          "name": "Technical"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=N4QjElo58_o"
+      },
+      {
+        "id": 26689,
+        "player": {
+          "banned": false,
+          "id": 1800,
+          "name": "Ozzy612"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=Nhf3jbkgZb8"
+      },
+      {
+        "id": 26783,
+        "player": {
+          "banned": false,
+          "id": 454,
+          "name": "Mycrafted"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=39AP9_tWniw"
+      },
+      {
+        "id": 26785,
+        "player": {
+          "banned": false,
+          "id": 5240,
+          "name": "nSwish"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=1ULzxOXzfl4"
+      },
+      {
+        "id": 26837,
+        "player": {
+          "banned": false,
+          "id": 2764,
+          "name": "rori"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=I8bv64z591Q"
+      },
+      {
+        "id": 28211,
+        "player": {
+          "banned": false,
+          "id": 1534,
+          "name": "crazen"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=XpQNyN_pEnQ"
+      },
+      {
+        "id": 29041,
+        "player": {
+          "banned": false,
+          "id": 708,
+          "name": "XeonJH"
+        },
+        "progress": 100,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=K4gpm6DFhM0"
+      },
+      {
+        "id": 30179,
+        "player": {
+          "banned": false,
+          "id": 332,
+          "name": "Joshua28"
+        },
+        "progress": 95,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=Yp6GdHijf4M"
+      },
+      {
+        "id": 28250,
+        "player": {
+          "banned": false,
+          "id": 2492,
+          "name": "Grey749"
+        },
+        "progress": 90,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=wMaD4djB2ck"
+      },
+      {
+        "id": 27005,
+        "player": {
+          "banned": false,
+          "id": 3883,
+          "name": "Real"
+        },
+        "progress": 67,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=CLN8fLmofMY"
+      },
+      {
+        "id": 28142,
+        "player": {
+          "banned": false,
+          "id": 5609,
+          "name": "Liternix"
+        },
+        "progress": 60,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=xIsOMueW1z4"
+      },
+      {
+        "id": 28323,
+        "player": {
+          "banned": false,
+          "id": 5459,
+          "name": "crohn44"
+        },
+        "progress": 58,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=gBo6cVrznTc"
+      },
+      {
+        "id": 30063,
+        "player": {
+          "banned": false,
+          "id": 39,
+          "name": "Atomic"
+        },
+        "progress": 57,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=1zia7QaHk1U"
+      },
+      {
+        "id": 23531,
+        "player": {
+          "banned": false,
+          "id": 2130,
+          "name": "Gabs"
+        },
+        "progress": 56,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=FrN1AbEi4SI"
+      },
+      {
+        "id": 27488,
+        "player": {
+          "banned": false,
+          "id": 32984,
+          "name": "kaydogz"
+        },
+        "progress": 54,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=KxTwCjQl1kQ"
+      },
+      {
+        "id": 29788,
+        "player": {
+          "banned": false,
+          "id": 4557,
+          "name": "FarzzZinjj"
+        },
+        "progress": 53,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=eCkTtU1gtZI"
+      },
+      {
+        "id": 26998,
+        "player": {
+          "banned": false,
+          "id": 5279,
+          "name": "ItzHyperFlame"
+        },
+        "progress": 52,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=t-1zdtbOK4M"
+      },
+      {
+        "id": 28194,
+        "player": {
+          "banned": false,
+          "id": 4543,
+          "name": "Slithium"
+        },
+        "progress": 52,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=hwXPG9nejmA"
+      },
+      {
+        "id": 27180,
+        "player": {
+          "banned": false,
+          "id": 4899,
+          "name": "TheUltraBlock"
+        },
+        "progress": 51,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=DKrqU3se12M"
+      },
+      {
+        "id": 24753,
+        "player": {
+          "banned": false,
+          "id": 520,
+          "name": "Rainstorm"
+        },
+        "progress": 50,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=kTAiq_OYYDQ"
+      },
+      {
+        "id": 28723,
+        "player": {
+          "banned": false,
+          "id": 32379,
+          "name": "JK187"
+        },
+        "progress": 50,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=Cmb3vsojLfk"
+      },
+      {
+        "id": 27174,
+        "player": {
+          "banned": false,
+          "id": 5569,
+          "name": "PoweredByPie"
+        },
+        "progress": 49,
+        "status": "approved",
+        "video": "https://www.youtube.com/watch?v=fwNs_VVr6m8"
+      }
+    ],
+    "requirement": 49,
+    "verifier": {
+      "banned": true,
+      "id": 698,
+      "name": "xander556"
+    },
+    "video": "https://www.youtube.com/watch?v=HCQK_y8JutU"
+  }
+}

@@ -200,5 +200,5 @@ module.exports.toLength = async (str, length, place = 'left', joiner = ' ') => {
 module.exports.timeFormatted = async () => {
 	// Set Time
 	let time = new Date();
-	return `${time.getFullYear()}-${time.getMonth() < 9 ? `0${time.getMonth()}` : time.getMonth()}-${time.getDate() < 10 ? `0${time.getDate()}` : time.getDate()} ${time.getHours() < 10 ? `0${time.getHours()}` : time.getHours()}-${time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes()}-${time.getSeconds() < 10 ? `0${time.getSeconds()}` : time.getSeconds()}`;
+	return `${time.getFullYear()}-${time.getMonth() < 9 ? `0${time.getMonth() + 1}` : time.getMonth() + 1}-${time.getDate() < 10 ? `0${time.getDate()}` : time.getDate()} ${time.getHours() < 10 ? `0${time.getHours()}` : time.getHours()}-${time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes()}-${time.getSeconds() < 10 ? `0${time.getSeconds()}` : time.getSeconds()}`;
 };

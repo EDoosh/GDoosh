@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
 	for (i = 0; i < parseInt(args[1]); i++) {
 		let resp = await rp({ method: 'POST', uri: 'http://boomlings.com/database/getGJUsers20.php', form: { str: 'EDoosh', secret: regData.secret } }).catch(() => {
 			fails += 1;
-			resp = '-2';
+			return '-2';
 		});
 		if (!resp || resp == '-1') fails += 1;
 	}

@@ -8,8 +8,8 @@
 @ You may not remove the name EDoosh anywhere from this bot or code, except in config.json
 @ By hosting this, EDoosh takes no responsibility for whatever happens.
 @ You may host this on multiple servers, but be warned that you may have your bot temporarily suspended due to Discord's spam protection.
-@ Edits to this code are allowed. 
-@ Monetary gain, in any form, even from personal edits, are not allowed.
+@ Edits to this code are allowed, except those done for malicious intent.
+@ Monetary gain, in any form, even from personal edits, is not allowed.
 @ If you are unsure about anything, or want me to clarify something, contact me at EDoosh#9599
 
 
@@ -45,6 +45,7 @@
             - request
             - request-promise
             - canvas
+            - json-format
         - Open up Visual Studio Code. Go to File -> Open Folder -> Select the extracted package of the downloaded GitHub file.
         - When this loads, open up your in-built terminal (Terminal -> New Terminal)
         - For each of the packages listed above, type 'npm i [name of the package]'. Wait for it to install and do the next.
@@ -56,7 +57,7 @@
             - Delete login.txt.
     - CONFIG.JSON SETUP
         - Firstly, rename 'config TEMPLATE.json' to simply 'config.json'
-        - Secondly, to invite the bot to the emoji serversm see below at the bottom of the config.json chapter
+        - Secondly, to invite the bot to the emoji servers, see below at the bottom of the config.json chapter
 
 ### Running GDoosh
     - To run GDoosh, open up your terminal (Terminal -> New Terminal) and type 'node .'
@@ -85,8 +86,12 @@
 
     - getratedInterval
         - The amount of time, in minutes, between each GetRatedLevels check
+    - checkTimedEvery
+        - Checks for Daily and Rated levels after every x checks of getratedInterval
     - linkAccInterval
         - The amount of time, in seconds, between each newly-linked players check. Only happens if a user has done -=link in the past 5 mins
+    - updateLeaderboards
+        - The amount of hours between each leaderboards update.
 
     - copyDatabase
         - Whether or not the database should be backed up
@@ -95,7 +100,7 @@
     - deleteCopiedDatabaseInterval
         - The amount of time, in days, for a copied database to be automatically deleted.
             - Only deletes if the bot has been on the whole time. If the bot was closed before the timer runs out, it won't delete that file.
-    
+
     - displayServersOnLaunch
         - Whether or not to log every server the bot is in when you start up the bot.
     - commandCooldown

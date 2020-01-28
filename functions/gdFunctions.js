@@ -12,6 +12,7 @@ const tools = require('./generalFunctions.js');
 const Discord = require('discord.js');
 const C = require('canvas');
 const db = require('quick.db');
+const crypto = require('crypto');
 
 /**
  * Get a user's correct CP count.
@@ -84,7 +85,12 @@ module.exports.parseResponse = async (responseBody, splitter) => {
  */
 module.exports.profile = async search => {
 	// The following is just to get the account ID from a string. Does this even if search term is an ID
-	let accId = (await this.idAndUn(search))[2];
+	try {
+		var accId = (await this.idAndUn(search))[2];
+	} catch {
+		console.log('Error retrieving profile - accId failed.');
+		return null;
+	}
 
 	// The following retrieves information about the user from the accountId we got before.
 	// Create the object to pass through to request-promise
@@ -361,7 +367,7 @@ module.exports.retrieveLevel = async id => {
 		level.songSize = (song[5] || '0') + 'MB';
 		level.songID = song[1] || level.customSong;
 	} else {
-		let foundSong = await this.getSongOfficial(parseInt(x[12]) + 1);
+		let foundSong = await this.getSongOfficial(level.officialSong);
 		level.songName = foundSong.name;
 		level.songAuthor = foundSong.author;
 		level.songSize = foundSong.size;
@@ -597,6 +603,7 @@ module.exports.createIcons = async profile => {
 			let img = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${gamemodes[i]}&icon=${profile[gamemodes[i]]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`).catch(() => {
 				resolve('error');
 			});
+			if (!img) return resolve('error');
 			ctx.drawImage(img, i * 200 + (100 - img.width / 2), 100 - img.height / 2);
 		}
 
@@ -610,6 +617,7 @@ module.exports.createIcons = async profile => {
  * @param {string} type The type to create
  * @returns {Discord.Attachment} The attachment containing that icon
  */
+// owo
 module.exports.createIcon = async (profile, type) => {
 	return new Promise(async (resolve, reject) => {
 		if (type === 'icon') type = 'cube';
@@ -619,10 +627,18 @@ module.exports.createIcon = async (profile, type) => {
 		let icon = await C.loadImage(`https://gdbrowser.com/icon/*?noUser&form=${type}&icon=${profile[type]}&col1=${profile.col1}&col2=${profile.col2}&glow=${profile.glow ? 1 : 0}`).catch(() => {
 			resolve('error');
 		});
+		if (!icon) return resolve('error');
 		let canvas = C.createCanvas(icon.width, icon.height);
 		let ctx = canvas.getContext('2d');
 		ctx.drawImage(icon, 0, 0);
 
 		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username}-Icon.png`));
 	});
+};
+
+module.exports.sha1 = async data => {
+	return crypto
+		.createHash('sha1')
+		.update(data, 'binary')
+		.digest('hex');
 };
