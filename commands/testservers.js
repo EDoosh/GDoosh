@@ -20,6 +20,6 @@ module.exports.run = async (bot, message, args) => {
 module.exports.config = {
 	command: ['testservers', 'ts', 'tdb', 'testdatabase'],
 	permlvl: 'Admin',
-	help: ['Other', 'Check if the Geometry Dash servers are online.', 'Admin', '(number of requests)', 'Check if the Geometry Dash servers are online. Send a series of requests.'],
+	help: ['Admin', 'Check if the Geometry Dash servers are online.', 'Admin', '(number of requests)', 'Check if the Geometry Dash servers are online. Send a series of requests.'],
 	helpg: '',
 };

@@ -412,7 +412,6 @@ module.exports.run = async (bot, message, args) => {
 		let format = [];
 		for (i = 0; i < split.length; i++) {
 			let x = await gdtools.parseResponse(split[i], ':');
-			if (!x[35]) continue;
 			let y = {};
 			y.username = x[1];
 			y.playerId = x[2];

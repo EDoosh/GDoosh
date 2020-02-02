@@ -10,9 +10,9 @@ module.exports.run = async (bot, message, args) => {
 	if (!playersByUID.has(message.author.id)) return message.channel.send(`This Discord account is currently not connected to a Geometry Dash account.`);
 	let profile = await gdtools.idAndUn(await playersByUID.get(message.author.id));
 
-	message.author.send(`Please type the password of your account.\n> Please note that this system is not fully secure. By continuing, you agree that ${config.name} nor it's owners are responsible for anything that may happen as a result of you linking your password to your account.`);
+	let m = await message.author.send(`Please type the password of your account.\n> Please note that this system is not fully secure. By continuing, you agree that ${config.name} nor it's owners are responsible for anything that may happen as a result of you linking your password to your account.`);
 	const filterQM = fMsg => fMsg.author.id === message.author.id;
-	var msgQ = message.author.dmChannel.createMessageCollector(filterQM, { max: 1, time: 30000, errors: ['time'] });
+	var msgQ = await m.channel.createMessageCollector(filterQM, { max: 1, time: 30000, errors: ['time'] });
 	msgQ.on('collect', async respQ => {
 		un = profile[2];
 		toUser = loginData.accountId;

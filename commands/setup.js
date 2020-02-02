@@ -91,7 +91,7 @@ module.exports.run = async (bot, message, args) => {
 				else {
 					let retreiverole = await tools.getRole(message, item.value);
 					if (!retreiverole) newcursetto.push(`DELETED ROLE (${item.value})`);
-					else newcursetto.push(`${retreiverole.name} (${item.value})`);
+					else newcursetto.push(`@${retreiverole.name} (${item.value})`);
 				}
 			} else {
 				if (item.value.length === 0) newcursetto.push(`No roles exist with ${item.title} permission in the bot!`);
@@ -102,7 +102,7 @@ module.exports.run = async (bot, message, args) => {
 							newcursetto.push(`DELETED ROLE (${item.value[j]})`);
 							continue;
 						}
-						newcursetto.push(`${retreiverole.name} (${item.value[j]})`);
+						newcursetto.push(`@${retreiverole.name} (${item.value[j]})`);
 					}
 				}
 			}
@@ -111,11 +111,11 @@ module.exports.run = async (bot, message, args) => {
 			else {
 				let retrievedChannel = await tools.getChannel(message, item.value);
 				if (!retrievedChannel) newcursetto.push(`DELETED CHANNEL (${item.value})`);
-				else newcursetto.push(`${retrievedChannel.name} (${item.value})`);
+				else newcursetto.push(`#${retrievedChannel.name} (${item.value})`);
 			}
 		}
 
-		embedAll.addField(`${reactions[i + 1]} ⠀⠀${item.title}`, `${item.desc}\n*\`${newcursetto.join('\n')}\`*`);
+		embedAll.addField(`${reactions[i + 1]} ⠀⠀${item.title}`, `*\`${newcursetto.join('\n')}\`*`);
 		cursetto.push(newcursetto);
 	}
 
@@ -133,11 +133,8 @@ module.exports.run = async (bot, message, args) => {
 	// If the message was never reacted on when the time runs out...
 	reactcollector.on('end', collected => {
 		if (collected.size != 0) return;
-		// Delete the message and say so
-		try {
-			embedmsg.first().delete();
-		} catch {}
-		message.channel.send(`Modify selection timed out. Cancelled selection.`);
+		embedmsg.clearReactions();
+		embedmsg.edit(new Discord.RichEmbed(embedmsg.embeds[0]).setFooter(`Modify selection timed out. Cancelled selection.`));
 	});
 
 	// React on the server config message. Do this here so that, if a user reacts while the bot is still reacting, it still runs the reactcollector
