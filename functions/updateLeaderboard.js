@@ -13,7 +13,8 @@ Store their stats in the lb database, along with their playerId
 */
 
 module.exports.run = async () => {
-	let fplayers = (await db.get(`players`)) || [[]];
+	let fplayers = await db.get(`players`);
+	if (!fplayers || !fplayers.length || fplayers.length < 1) fplayers = [[]];
 	playersByPID = new Discord.Collection(fplayers);
 	let push = new Discord.Collection();
 	push.set('time', Date.now());

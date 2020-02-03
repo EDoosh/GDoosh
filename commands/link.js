@@ -11,8 +11,18 @@ module.exports.run = async (bot, message, args) => {
 		let oldDbPlayers = playersByUID.get(message.author.id);
 		playersByUID.delete(message.author.id);
 		playersByPID.delete(oldDbPlayers);
-		db.set(`players`, tools.arrayMap(playersByPID));
-		message.channel.send(`Successfully unlinked your account from **${(await gdtools.idAndUn(oldDbPlayers))[0]}**`);
+		let map = await tools.arrayMap(playersByPID);
+		if (!map || !map.length || map.length < 1) map = [[]];
+		await db.set(`players`, map);
+		if (passwords.has(message.author.id)) {
+			passwords.delete(message.author.id);
+			let map = await tools.arrayMap(passwords);
+			if (!map || !map.length || map.length < 1) map = [[]];
+			await db.set(`passwords`, map);
+			message.channel.send(`Successfully unlinked your account from **${(await gdtools.idAndUn(oldDbPlayers))[0]}**, and removed the associated password!`);
+		} else {
+			message.channel.send(`Successfully unlinked your account from **${(await gdtools.idAndUn(oldDbPlayers))[0]}**!`);
+		}
 	} else {
 		// Check if this account already has something associated with it
 		if (playersByUID.has(message.author.id)) return message.channel.send(`This account is already connected with the Geometry Dash account **${(await gdtools.idAndUn(playersByUID.get(message.author.id)))[0]}**`);
@@ -24,7 +34,6 @@ module.exports.run = async (bot, message, args) => {
 		message.author.send(`To connect up your account to ${config.name}, send the following code to the Geometry Dash account **${config.accountName}**.\nThe code must be the message content **and** title. Please allow up to ${config.linkAccInterval} seconds for it to connect you.`).then(
 			() => {
 				message.author.send(`\`${code}\``);
-				console.log(`${message.author.username} has the code ${code}`);
 				linkAccMap.set(code, message.author.id);
 				setTimeout(() => {
 					if (!linkAccMap.has(code)) return;

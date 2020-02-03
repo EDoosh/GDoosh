@@ -607,7 +607,7 @@ module.exports.createIcons = async profile => {
 			ctx.drawImage(img, i * 200 + (100 - img.width / 2), 100 - img.height / 2);
 		}
 
-		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username}-Icon-Set.png`));
+		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username.replace(' ', '-')}-Icon-Set.png`));
 	});
 };
 
@@ -617,7 +617,9 @@ module.exports.createIcons = async profile => {
  * @param {string} type The type to create
  * @returns {Discord.Attachment} The attachment containing that icon
  */
+
 // owo
+
 module.exports.createIcon = async (profile, type) => {
 	return new Promise(async (resolve, reject) => {
 		if (type === 'icon') type = 'cube';
@@ -632,7 +634,7 @@ module.exports.createIcon = async (profile, type) => {
 		let ctx = canvas.getContext('2d');
 		ctx.drawImage(icon, 0, 0);
 
-		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username}-Icon.png`));
+		resolve(new Discord.Attachment(canvas.toBuffer(), `${profile.username.replace(' ', '-')}-Icon.png`));
 	});
 };
 

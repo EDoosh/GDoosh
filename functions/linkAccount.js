@@ -9,12 +9,13 @@ const xor = new XOR();
 module.exports.run = async bot => {
 	// Retrieve all messages the account has from the GD servers
 	let rpOptionsGetAll = { method: 'POST', uri: 'http://www.boomlings.com/database/getGJMessages20.php', form: { gameVersion: regData.gameVersion, binaryVersion: regData.binaryVersion, gdw: '0', accountID: loginData.accountId, gjp: loginData.password, page: '0', total: '0', secret: regData.secret } };
-	let returned = await rp(rpOptionsGetAll).catch(() => console.log(cErrInfo(`Issue retrieving messages. GD Servers likely experiencing issues.`)));
+	let returned = await rp(rpOptionsGetAll).catch(() => {
+		return undefined;
+	});
 	// If there is an error, return error. If there are no messages, exit the function.
-	if (!returned) return;
+	if (!returned) return console.log(cErrInfo(`Issue retrieving messages. GD Servers likely experiencing issues.`));
 	if (returned === '-1') return console.log(cErrMsg('Retrieving messages returned -1 error message.'));
 	if (returned === '-2') return /*console.log('No messages.')*/;
-
 	// Split all the returned messages at the vertical line. This is what seperates each individual message.
 	let comments = returned.split('|');
 
@@ -33,8 +34,6 @@ module.exports.run = async bot => {
 		let content = xor.decrypt(msg[15], 14251);
 		let playerId = msg[3];
 
-		console.log(`${msg[1]} tried with code ${content}`);
-
 		// Check if it matches something in the Set we made in link.js
 		if (linkAccMap.has(content)) {
 			let lamg = linkAccMap.get(content);
@@ -43,7 +42,9 @@ module.exports.run = async bot => {
 				let oldDbPlayers = playersByUID.get(lamg);
 				playersByUID.delete(oldDbPlayers);
 				playersByPID.delete(playerId);
-				await db.set(`players`, await tools.arrayMap(playersByPID));
+				let map = await tools.arrayMap(playersByPID);
+				if (!map || !map.length || map.length < 1) map = [[]];
+				await db.set(`players`, map);
 				console.log(`LinkAccount 46 ${await db.get(`players`)}`);
 			}
 			// Check if discord already in DB
@@ -51,7 +52,9 @@ module.exports.run = async bot => {
 				let oldDbPlayers = playersByPID.get(playerId);
 				playersByUID.delete(lamg);
 				playersByPID.delete(oldDbPlayers);
-				await db.set(`players`, await tools.arrayMap(playersByPID));
+				let map = await tools.arrayMap(playersByPID);
+				if (!map || !map.length || map.length < 1) map = [[]];
+				await db.set(`players`, map);
 				console.log(`LinkAccount 54 ${await db.get(`players`)}`);
 			}
 			let user = await bot.users.find(x => x.id === lamg);
@@ -60,9 +63,8 @@ module.exports.run = async bot => {
 				playersByPID.set(playerId, lamg);
 				playersByUID.set(lamg, playerId);
 				user.send(`Successfully linked your account with **${msg[1]}**!\nIf you want to set yourself a custom profile description, use \`${config.prefix}me [your personal description]\` in the server you linked the bot in.`).catch(() => {});
-				console.log(`${user.username} successfully linked their account up with ${msg[1]}`);
 			} catch (err) {
-				console.log(err);
+				console.log(cErrInfo(`There was an issue linking a player's account.\nIf you think this is because there are no players in the database and the TypeError is 'Target is not an array.', please fix this by DMing EDoosh#9599 json.sqlite.\nThe following is the full error message.\n`) + cErrMsg(err));
 				user.send(`There was an issue linking your account`);
 			}
 			linkAccMap.delete(content);

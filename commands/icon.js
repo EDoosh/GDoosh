@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
 	message.channel.send(
 		new Discord.RichEmbed()
 			.setTitle(`${profile.username}'s Icon${a === 1 ? `s` : ''}`)
-			.setImage(`attachment://${profile.username}-Icon${a === 1 ? `-Set` : ''}.png`)
+			.setImage(`attachment://${profile.username.replace(' ', '-')}-Icon${a === 1 ? `-Set` : ''}.png`)
 			.attachFile(img),
 	);
 };
